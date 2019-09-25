@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Weather API</title>
+  </head>
+  <script type="text/javascript">
+    function current() {
+      var xhr = new XMLHttpRequest();
+      var day3 = Date.now() + 259200000;
+      xhr.open('GET', 'localhost:8088/current/?city=' + 'Moscow', false);
+      xhr.send();
+      if (xhr.status != 200) {
+        // обработать ошибку
+        alert( xhr.status + ': ' + xhr.statusText );
+      } else {
+        // вывести результат
+        console.log( xhr.responseText );
+      };
+    };
+
+    function forecast() {
+      var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+      var xhr = new XHR();
+      var day3 = Date.now() + 259200000;
+      xhr.open('GET', 'localhost:8088/v1/forecast/?city=' + 'Moscow' + '?timestamp=' + day3, false);
+      //xhr.responseType = "json";
+      xhr.onload = function() {
+        alert( this.responseText );
+      }
+      xhr.onerror = function() {
+        alert( 'Ошибка ' + this.status );
+      }
+      xhr.send();
+    }
+  </script>
+  <body>
+    <div>
+      Your town: Moscow
+    </div>
+    <button type="button" name="current" onclick="current()">Current weather</button>
+    <button type="button" name="forecast" onclick="forecast()">3 days forecast</button>
+  </body>
+</html>
